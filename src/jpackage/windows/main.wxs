@@ -72,6 +72,7 @@
     <!-- Standard required root -->
     <Directory Id="TARGETDIR" Name="SourceDir"/>
 
+    <!-- Protocol Handlers -->
     <Component Id="ProtocolHandlers" Guid="{9e66ab4c-f4b7-4b22-a2ba-cbb171cb7397}">
         <RegistryKey Root="HKCR"
               Key="jbang"
@@ -86,12 +87,15 @@
           </RegistryKey>
         </RegistryKey>
     </Component>
+    <!-- End Protocol Handlers -->
 
     <Feature Id="DefaultFeature" Title="!(loc.MainFeatureTitle)" Level="1">
       <ComponentGroupRef Id="Shortcuts"/>
       <ComponentGroupRef Id="Files"/>
       <ComponentGroupRef Id="FileAssociations"/>
+      <!-- Protocol Handlers -->
       <ComponentGroupRef Id="ProtocolHandlers"/>
+      <!-- End Protocol Handlers -->
       <ComponentGroupRef Id="FragmentOsCondition"/>
     </Feature>
 
