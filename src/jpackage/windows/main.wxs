@@ -73,7 +73,7 @@
     <Directory Id="TARGETDIR" Name="SourceDir"/>
 
     <!-- Protocol Handlers -->
-    <Component Id="ProtocolHandlers" Guid="{9e66ab4c-f4b7-4b22-a2ba-cbb171cb7397}" Directory="INSTALLFOLDER">
+    <!-- <Component Id="ProtocolHandlers" Guid="*" Directory="INSTALLFOLDER">
         <RegistryKey Root="HKCR"
               Key="jbang"
               Action="createAndRemoveOnUninstall">
@@ -86,7 +86,7 @@
             <RegistryValue Type="string" Value="&quot;[INSTALLFOLDER]jbang-launch.exe&quot; &quot;%1&quot;" />
           </RegistryKey>
         </RegistryKey>
-    </Component>
+    </Component> -->
     <!-- End Protocol Handlers -->
 
     <Feature Id="DefaultFeature" Title="!(loc.MainFeatureTitle)" Level="1">
@@ -94,7 +94,7 @@
       <ComponentGroupRef Id="Files"/>
       <ComponentGroupRef Id="FileAssociations"/>
       <!-- Protocol Handlers -->
-      <ComponentRef Id="ProtocolHandlers"/>
+      <!--<ComponentRef Id="ProtocolHandlers"/> -->
       <!-- End Protocol Handlers -->
       <ComponentGroupRef Id="FragmentOsCondition"/>
     </Feature>

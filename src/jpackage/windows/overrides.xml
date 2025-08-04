@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<Include xmlns="http://schemas.microsoft.com/wix/2006/wi"
+         xmlns:util="http://schemas.microsoft.com/wix/UtilExtension">
+  <!--
+    Configuration correponds to NSSM
+  -->
+  <DirectoryRef Id="INSTALLDIR">
+    <Component Id="nssm_Application_APPLICATION_LAUNCHER_ID" Guid="*">
+      <RegistryKey Root="HKCR"
+              Key="jbang"
+              Action="createAndRemoveOnUninstall">
+          <RegistryValue Type="string" Name="URL Protocol" Value=""/>
+          <RegistryValue Type="string" Value="URL:dev.jbang.launch"/>
+          <RegistryKey Key="DefaultIcon">
+            <RegistryValue Type="string" Value="jbang-launch.exe" />
+          </RegistryKey>
+          <RegistryKey Key="shell\open\command">
+            <RegistryValue Type="string" Value="&quot;[INSTALLFOLDER]jbang-launch.exe&quot; &quot;%1&quot;" />
+          </RegistryKey>
+        </RegistryKey>
+    </Component>
+  </DirectoryRef>
+</Include>a
