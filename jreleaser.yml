@@ -79,6 +79,7 @@ assemble:
         types: [msi]
         console: true
         dirChooser: true
+        resourceDir: src/jpackage/windows
 
 distributions:
   jbang-launch:
@@ -87,6 +88,10 @@ distributions:
       - path: '{{artifactsDir}}/{{distributionName}}-{{projectVersionNumber}}-osx-x86_64.pkg'
         platform: 'osx-x86_64'
       - path: '{{artifactsDir}}/{{distributionName}}-{{projectVersionNumber}}-osx-aarch64.pkg'
+        platform: 'osx-aarch_64'
+      - path: '{{artifactsDir}}/{{distributionName}}-{{projectVersionNumber}}-osx-x86_64.dmg'
+        platform: 'osx-x86_64'
+      - path: '{{artifactsDir}}/{{distributionName}}-{{projectVersionNumber}}-osx-aarch64.dmg'
         platform: 'osx-aarch_64'
       - path: '{{artifactsDir}}/{{distributionName}}_{{projectVersionNumber}}-1_amd64.deb'
         platform: 'linux-x86_64'

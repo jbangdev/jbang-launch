@@ -8,6 +8,10 @@ env:
   JAVA_VERSION: '11'
   JAVA_DISTRO: 'zulu'
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   precheck:
     if: github.repository == 'jbangdev/jbang-launch' && startsWith(github.event.head_commit.message, 'Releasing version') != true
@@ -17,11 +21,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-
-      - name: Cancel previous run
-        uses: styfle/cancel-workflow-action@0.12.1
-        with:
-          access_token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Setup Java
         uses: actions/setup-java@v4
