@@ -6,8 +6,8 @@ environment:
 
 project:
   name: jbang-launch
-  description: JBang Launch in Java
-  longDescription: JBang Launch in Java
+  description: JBang Launch desd
+  longDescription: JBang Launch long desc
   links:
     homepage: https://github.com/jbangdev/jbang-launch
   authors:
@@ -64,7 +64,7 @@ assemble:
       applicationPackage:
         appName: jbang-launch
         appVersion: '{{projectVersionNumber}}'
-        vendor: JReleaser
+        vendor: jbangdev
        
       osx:
         types: [pkg,dmg]
@@ -77,7 +77,7 @@ assemble:
         maintainer: jbang@jbang.dev
       windows:
         types: [msi]
-        console: true
+        console: false
         dirChooser: true
         resourceDir: src/jpackage/windows
 
