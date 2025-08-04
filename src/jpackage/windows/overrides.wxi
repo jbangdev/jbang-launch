@@ -29,9 +29,10 @@ By default it is defined, use <?undef JpAllowUpgrades?> to disable.
 -->
 <Include xmlns="http://schemas.microsoft.com/wix/2006/wi">
 
+    <!-- example from https://stackoverflow.com/questions/8304851/wix-how-to-register-an-application-to-a-url-protocol -->
     <!-- guid from https://www.guidgen.com/ -->
 <Component Id="ProductComponent" Guid="{9e66ab4c-f4b7-4b22-a2ba-cbb171cb7397}">
-    <File Source="$(var.MyMainProgram.TargetPath)" />
+    <!--<File Source="$(var.MyMainProgram.TargetPath)" />-->
     <RegistryKey Root="HKCR"
           Key="jbang"
           Action="createAndRemoveOnUninstall">
