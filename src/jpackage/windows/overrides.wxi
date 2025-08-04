@@ -31,20 +31,23 @@ By default it is defined, use <?undef JpAllowUpgrades?> to disable.
 
     <!-- example from https://stackoverflow.com/questions/8304851/wix-how-to-register-an-application-to-a-url-protocol -->
     <!-- guid from https://www.guidgen.com/ -->
-<Component Id="ProductComponent" Guid="{9e66ab4c-f4b7-4b22-a2ba-cbb171cb7397}">
-    <!--<File Source="$(var.MyMainProgram.TargetPath)" />-->
-    <RegistryKey Root="HKCR"
-          Key="jbang"
-          Action="createAndRemoveOnUninstall">
-      <RegistryValue Type="string" Name="URL Protocol" Value=""/>
-      <RegistryValue Type="string" Value="URL:dev.jbang.launch"/>
-      <RegistryKey Key="DefaultIcon">
-        <RegistryValue Type="string" Value="jbang-launch.exe" />
-      </RegistryKey>
-      <RegistryKey Key="shell\open\command">
-        <RegistryValue Type="string" Value="&quot;[INSTALLFOLDER]jbang-launch.exe&quot; &quot;%1&quot;" />
-      </RegistryKey>
-    </RegistryKey>
-  </Component>
+
+  <!-- Add the protocol handler component to the main feature -->
+  <FeatureRef Id="DefaultFeature">
+    <Component Id="ProtocolHandlerComponent" Guid="{9e66ab4c-f4b7-4b22-a2ba-cbb171cb7397}">
+        <RegistryKey Root="HKCR"
+              Key="jbang"
+              Action="createAndRemoveOnUninstall">
+          <RegistryValue Type="string" Name="URL Protocol" Value=""/>
+          <RegistryValue Type="string" Value="URL:dev.jbang.launch"/>
+          <RegistryKey Key="DefaultIcon">
+            <RegistryValue Type="string" Value="jbang-launch.exe" />
+          </RegistryKey>
+          <RegistryKey Key="shell\open\command">
+            <RegistryValue Type="string" Value="&quot;[INSTALLFOLDER]jbang-launch.exe&quot; &quot;%1&quot;" />
+          </RegistryKey>
+        </RegistryKey>
+      </Component>
+  </FeatureRef>
 
   </Include>
