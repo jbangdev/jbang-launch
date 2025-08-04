@@ -65,17 +65,33 @@
     <CustomAction Id="JpDisallowDowngrade" Error="!(loc.DowngradeErrorMessage)" />
     <?endif?>
 
-    <Binary Id="JpCaDll" SourceFile="wixhelper.dll"/>
-
-    <CustomAction Id="JpFindRelatedProducts" BinaryKey="JpCaDll" DllEntry="FindRelatedProductsEx" />
-
     <!-- Standard required root -->
     <Directory Id="TARGETDIR" Name="SourceDir"/>
+
+    <!-- Protocol Handlers -->
+    <Component Id="ProtocolHandlers" Guid="{9e66ab4c-f4b7-4b22-a2ba-cbb171cb7397}" Directory="INSTALLFOLDER">
+        <RegistryKey Root="HKCR"
+              Key="jbang"
+              Action="createAndRemoveOnUninstall">
+          <RegistryValue Type="string" Name="URL Protocol" Value=""/>
+          <RegistryValue Type="string" Value="URL:dev.jbang.launch"/>
+          <RegistryKey Key="DefaultIcon">
+            <RegistryValue Type="string" Value="jbang-launch.exe" />
+          </RegistryKey>
+          <RegistryKey Key="shell\open\command">
+            <RegistryValue Type="string" Value="&quot;[INSTALLFOLDER]jbang-launch.exe&quot; &quot;%1&quot;" />
+          </RegistryKey>
+        </RegistryKey>
+    </Component>
+    <!-- End Protocol Handlers -->
 
     <Feature Id="DefaultFeature" Title="!(loc.MainFeatureTitle)" Level="1">
       <ComponentGroupRef Id="Shortcuts"/>
       <ComponentGroupRef Id="Files"/>
       <ComponentGroupRef Id="FileAssociations"/>
+      <!-- Protocol Handlers -->
+      <ComponentRef Id="ProtocolHandlers"/>
+      <!-- End Protocol Handlers -->
       <ComponentGroupRef Id="FragmentOsCondition"/>
     </Feature>
 
