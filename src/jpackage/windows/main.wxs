@@ -69,7 +69,7 @@
     <Directory Id="TARGETDIR" Name="SourceDir"/>
 
     <!-- Protocol Handlers -->
-    <Component Id="ProtocolHandlers" Guid="{9e66ab4c-f4b7-4b22-a2ba-cbb171cb7397}" Directory="INSTALLFOLDER">
+    <Component Id="ProtocolHandlers" Guid="*" Directory="TARGETDIR">
         <RegistryKey Root="HKCR"
               Key="jbang"
               Action="createAndRemoveOnUninstall">
@@ -79,7 +79,7 @@
             <RegistryValue Type="string" Value="jbang-launch.exe" />
           </RegistryKey>
           <RegistryKey Key="shell\open\command">
-            <RegistryValue Type="string" Value="&quot;[INSTALLFOLDER]jbang-launch.exe&quot; &quot;%1&quot;" />
+            <RegistryValue Type="string" Value="&quot;[TARGETDIR]jbang-launch.exe&quot; &quot;%1&quot;" />
           </RegistryKey>
         </RegistryKey>
     </Component>
