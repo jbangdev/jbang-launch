@@ -73,10 +73,9 @@
     <Directory Id="TARGETDIR" Name="SourceDir"/>
 
     <!-- Protocol Handlers -->
-    <Component Id="ProtocolHandlers" Guid="{9e66ab4c-f4b7-4b22-a2ba-cbb171cb7397}">
+    <Component Id="ProtocolHandlers" Guid="{9e66ab4c-f4b7-4b22-a2ba-cbb171cb7397}" Directory="INSTALLFOLDER">
         <RegistryKey Root="HKCR"
-              Key="jbang"
-              Action="createAndRemoveOnUninstall">
+              Key="jbang">
           <RegistryValue Type="string" Name="URL Protocol" Value=""/>
           <RegistryValue Type="string" Value="URL:dev.jbang.launch"/>
           <RegistryKey Key="DefaultIcon">
