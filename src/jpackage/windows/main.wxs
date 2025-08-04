@@ -92,7 +92,6 @@
       <!-- Protocol Handlers -->
       <ComponentRef Id="ProtocolHandlers"/>
       <!-- End Protocol Handlers -->
-      <ComponentGroupRef Id="FragmentOsCondition"/>
     </Feature>
 
     <CustomAction Id="JpSetARPINSTALLLOCATION" Property="ARPINSTALLLOCATION" Value="[INSTALLDIR]" />
