@@ -71,14 +71,17 @@ assemble:
         appName: jbang-launch
         packageName: JBangLaunch
         packageIdentifier: dev.jbang.launch.jbang-launch
+        icon: 'src/media/jbang.icns'
         resourceDir: src/jpackage/osx
       linux:
         types: [deb,rpm]
         maintainer: jbang@jbang.dev
+        icon: 'src/media/icon_256x256.png'
       windows:
         types: [msi]
         console: false
         dirChooser: true
+        icon: 'src/media/jbang.ico'
         resourceDir: src/jpackage/windows
 
 distributions:
