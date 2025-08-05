@@ -1,10 +1,9 @@
 [Desktop Entry]
-Version=1.0
-Type=Application
-Name=JBang Launch
-Comment=JBang Protocol Handler
-Exec=jbang-launch %u
-Icon=jbang-launch
+Name=APPLICATION_NAME
+Comment=APPLICATION_DESCRIPTION
+Exec=APPLICATION_LAUNCHER
+Icon=APPLICATION_ICON
 Terminal=false
-Categories=Development;Java;
+Type=Application
+Categories=DEPLOY_BUNDLE_CATEGORY
 MimeType=x-scheme-handler/jbang; 
