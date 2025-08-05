@@ -1,7 +1,7 @@
 environment:
   properties:
     jdkPathPrefix: 'target/jdks'
-    jdkFilePrefix: 'zulu17.32.13-ca-jdk17.0.2'
+    jdkFilePrefix: 'jdk-17.0.16+8'
     artifactsDir: out/jreleaser/assemble/jbang-launch/jpackage
 
 project:
@@ -17,7 +17,7 @@ project:
   stereotype: CLI
   languages:
     java:
-      version: 11
+      version: 17
       groupId: dev.jbang.launch
       artifactId: jbang-launch
       mainClass: dev.jbang.launch.JBangLaunch
@@ -43,13 +43,13 @@ assemble:
       imageName: 'jbang-launch-{{projectVersion}}'
       executable: jbang-launch
       targetJdks:
-        - path: '{{jdkPathPrefix}}/zulu17OsxIntel/{{jdkFilePrefix}}-macosx_x64/zulu-17.jdk/Contents/Home'
+        - path: '{{jdkPathPrefix}}/17OsxIntel/{{jdkFilePrefix}}/Contents/Home'
           platform: 'osx-x86_64'
-        - path: '{{jdkPathPrefix}}/zulu17OsxArm/{{jdkFilePrefix}}-macosx_aarch64/zulu-17.jdk/Contents/Home'
+        - path: '{{jdkPathPrefix}}/17OsxArm/{{jdkFilePrefix}}/Contents/Home'
           platform: 'osx-aarch_64'
-        - path: '{{jdkPathPrefix}}/zulu17LinuxIntel/{{jdkFilePrefix}}-linux_x64'
+        - path: '{{jdkPathPrefix}}/17LinuxIntel/{{jdkFilePrefix}}'
           platform: 'linux-x86_64'
-        - path: '{{jdkPathPrefix}}/zulu17WindowsIntel/{{jdkFilePrefix}}-win_x64'
+        - path: '{{jdkPathPrefix}}/17WindowsIntel/{{jdkFilePrefix}}'
           platform: 'windows-x86_64'
       mainJar:
         path: 'target/jbang-launch-{{projectVersion}}.jar'

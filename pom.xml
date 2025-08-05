@@ -33,8 +33,8 @@
   <properties>
     <app.main.class>dev.jbang.launch.JBangLaunch</app.main.class>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <java.version>11</java.version>
-    <jdk.version>17.0.2</jdk.version>
+    <java.version>17</java.version>
+    <jdk.version>17.0.16+8</jdk.version>
     <maven.compiler.source>${java.version}</maven.compiler.source>
     <maven.compiler.target>${java.version}</maven.compiler.target>
     <maven.compiler.release>${java.version}</maven.compiler.release>
@@ -113,24 +113,31 @@
             <configuration>
               <pkgs>
                 <pkg>
-                  <name>zulu17LinuxIntel</name>
+                  <name>17LinuxIntel</name>
                   <platform>linux-x86_64</platform>
                   <version>${jdk.version}</version>
+                  <archiveType>tar.gz</archiveType>
+                  <distribution>temurin</distribution>
                 </pkg>
                 <pkg>
-                  <name>zulu17OsxIntel</name>
+                  <name>17OsxIntel</name>
                   <platform>osx-x86_64</platform>
                   <version>${jdk.version}</version>
+                  <archiveType>tar.gz</archiveType>
+                  <distribution>temurin</distribution>
                 </pkg>
                 <pkg>
-                  <name>zulu17OsxArm</name>
+                  <name>17OsxArm</name>
                   <platform>osx-aarch64</platform>
                   <version>${jdk.version}</version>
+                  <archiveType>tar.gz</archiveType>
+                  <distribution>temurin</distribution>
                 </pkg>
                 <pkg>
-                  <name>zulu17WindowsIntel</name>
+                  <name>17WindowsIntel</name>
                   <platform>windows-x86_64</platform>
                   <version>${jdk.version}</version>
+                  <distribution>temurin</distribution>
                 </pkg>
               </pkgs>
             </configuration>
