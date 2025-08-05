@@ -81,7 +81,7 @@
         <groupId>org.apache.maven.plugins</groupId>
         <!-- enabled to make jlink happy and have dependencies included in the jar -->
         <artifactId>maven-shade-plugin</artifactId>
-        <version>3.5.2</version>
+        <version>3.6.0</version>
         <executions>
           <execution>
             <phase>package</phase>
