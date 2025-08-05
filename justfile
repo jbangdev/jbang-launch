@@ -1,7 +1,7 @@
 # https://just.systems
 
 build:
-    ./gradlew verify
+    ./mvnw verify
 
 assemble:
     JRELEASER_PROJECT_VERSION=1.0.0-SNAPSHOT ./jbang jreleaser@jreleaser assemble
