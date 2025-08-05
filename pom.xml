@@ -120,6 +120,13 @@
                   <distribution>temurin</distribution>
                 </pkg>
                 <pkg>
+                  <name>17LinuxArm</name>
+                  <platform>linux-aarch64</platform>
+                  <version>${jdk.version}</version>
+                  <archiveType>tar.gz</archiveType>
+                  <distribution>temurin</distribution>
+                </pkg>
+                <pkg>
                   <name>17OsxIntel</name>
                   <platform>osx-x86_64</platform>
                   <version>${jdk.version}</version>
