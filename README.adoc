@@ -9,3 +9,27 @@ ifdef::env-github[]
 endif::[]
 
 WIP for enabling jbang:// protocol handler on macOS, Linux and Windows.
+
+Very much early access - use at your own risk.
+
+:releases-url: https://github.com/jbangdev/jbang-launch/releases/download/early-access
+
+[cols="1,1", options="header"]
+|===
+| Platform
+| Download
+
+| 🖥️ macOS (Intel)
+| link:{releases-url}/jbang-launch-1.0.0-osx-x86_64.pkg[PKG] / link:{releases-url}/jbang-launch-1.0.0-osx-x86_64.dmg[DMG]
+
+| 🍏 macOS (Apple Silicon)
+| link:{releases-url}/jbang-launch-1.0.0-osx-aarch64.pkg[PKG] / link:{releases-url}/jbang-launch-1.0.0-osx-aarch64.dmg[DMG]
+
+| 🐧 Linux (x86_64)
+| link:{releases-url}/jbang-launch_1.0.0-1_amd64.deb[DEB] / link:{releases-url}/jbang-launch-1.0.0-1.x86_64.rpm[RPM]
+
+| 🪟 Windows (x86_64)
+| link:{releases-url}/jbang-launch-1.0.0-windows-x86_64.msi[MSI]
+|===
+
+
