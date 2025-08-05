@@ -62,7 +62,15 @@
     <tag>HEAD</tag>
   </scm>
 
-  <build>
+  <dependencies>
+    <dependency>
+      <groupId>com.formdev</groupId>
+      <artifactId>flatlaf</artifactId>
+      <version>3.5</version>
+    </dependency>
+  </dependencies>
+
+  <build>  
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -71,15 +79,24 @@
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-jar-plugin</artifactId>
-        <version>3.4.2</version>
-        <configuration>
-          <archive>
-            <manifest>
-              <mainClass>${app.main.class}</mainClass>
-            </manifest>
-          </archive>
-        </configuration>
+        <!-- enabled to make jlink happy and have dependencies included in the jar -->
+        <artifactId>maven-shade-plugin</artifactId>
+        <version>3.5.2</version>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>shade</goal>
+            </goals>
+            <configuration>
+              <transformers>
+                <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                  <mainClass>${app.main.class}</mainClass>
+                </transformer>
+              </transformers>
+            </configuration>
+          </execution>
+        </executions>
       </plugin>
     </plugins>
   </build>
