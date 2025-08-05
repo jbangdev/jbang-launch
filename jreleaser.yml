@@ -107,7 +107,7 @@ distributions:
       - path: '{{artifactsDir}}/{{distributionName}}-{{projectEffectiveVersion}}-1.x86_64.rpm'
         platform: 'linux-x86_64'
       - path: '{{jpackageDir}}/{{distributionName}}_{{projectEffectiveVersion}}-1_arm64.deb'
-        transform: '{{distributionName}}/{{distributionName}}_{{projectEffectiveVersion}}-1_arm64.deb'
+        transform: '{{distributionName}}/{{distributionName}}-{{projectEffectiveVersion}}-1_arm64.deb'
         platform: 'linux-aarch_64'
       - path: '{{jpackageDir}}/{{distributionName}}-{{projectEffectiveVersion}}-1.aarch64.rpm'
         transform: '{{distributionName}}/{{distributionName}}-{{projectEffectiveVersion}}-1.aarch64.rpm'
