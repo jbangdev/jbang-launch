@@ -22,6 +22,7 @@ project:
       artifactId: jbang-launch
       mainClass: dev.jbang.launch.JBangLaunch
   snapshot:
+    label: '{{projectVersionNumber}}-early-access'
     fullChangelog: true
 
 
@@ -43,7 +44,7 @@ assemble:
     jbang-launch-jlink:
       active: ALWAYS
       exported: false
-      imageName: 'jbang-launch-{{projectVersion}}'
+      imageName: 'jbang-launch-{{projectEffectiveVersion}}'
       executable: jbang-launch
       targetJdks:
         - path: '{{jdkPathPrefix}}/17OsxIntel/{{jdkFilePrefix}}/Contents/Home'
@@ -93,24 +94,24 @@ distributions:
   jbang-launch:
     type: NATIVE_PACKAGE
     artifacts:
-      - path: '{{artifactsDir}}/{{distributionName}}-{{projectVersionNumber}}-osx-x86_64.pkg'
+      - path: '{{artifactsDir}}/{{distributionName}}-{{projectEffectiveVersion}}-osx-x86_64.pkg'
         platform: 'osx-x86_64'
-      - path: '{{artifactsDir}}/{{distributionName}}-{{projectVersionNumber}}-osx-aarch64.pkg'
+      - path: '{{artifactsDir}}/{{distributionName}}-{{projectEffectiveVersion}}-osx-aarch64.pkg'
         platform: 'osx-aarch_64'
-      - path: '{{artifactsDir}}/{{distributionName}}-{{projectVersionNumber}}-osx-x86_64.dmg'
+      - path: '{{artifactsDir}}/{{distributionName}}-{{projectEffectiveVersion}}-osx-x86_64.dmg'
         platform: 'osx-x86_64'
-      - path: '{{artifactsDir}}/{{distributionName}}-{{projectVersionNumber}}-osx-aarch64.dmg'
+      - path: '{{artifactsDir}}/{{distributionName}}-{{projectEffectiveVersion}}-osx-aarch64.dmg'
         platform: 'osx-aarch_64'
-      - path: '{{artifactsDir}}/{{distributionName}}_{{projectVersionNumber}}-1_amd64.deb'
+      - path: '{{artifactsDir}}/{{distributionName}}_{{projectEffectiveVersion}}-1_amd64.deb'
         platform: 'linux-x86_64'
-      - path: '{{artifactsDir}}/{{distributionName}}-{{projectVersionNumber}}-1.x86_64.rpm'
+      - path: '{{artifactsDir}}/{{distributionName}}-{{projectEffectiveVersion}}-1.x86_64.rpm'
         platform: 'linux-x86_64'
-      - path: '{{jpackageDir}}/{{distributionName}}_{{projectVersionNumber}}-1_arm64.deb'
-        transform: '{{distributionName}}/{{distributionName}}_{{projectVersionNumber}}-1_arm64.deb'
+      - path: '{{jpackageDir}}/{{distributionName}}_{{projectEffectiveVersion}}-1_arm64.deb'
+        transform: '{{distributionName}}/{{distributionName}}_{{projectEffectiveVersion}}-1_arm64.deb'
         platform: 'linux-aarch_64'
-      - path: '{{jpackageDir}}/{{distributionName}}-{{projectVersionNumber}}-1.aarch64.rpm'
-        transform: '{{distributionName}}/{{distributionName}}-{{projectVersionNumber}}-1.aarch64.rpm'
+      - path: '{{jpackageDir}}/{{distributionName}}-{{projectEffectiveVersion}}-1.aarch64.rpm'
+        transform: '{{distributionName}}/{{distributionName}}-{{projectEffectiveVersion}}-1.aarch64.rpm'
         platform: 'linux-aarch_64'
-      - path: '{{artifactsDir}}/{{distributionName}}-{{projectVersionNumber}}-windows-x86_64.msi'
+      - path: '{{artifactsDir}}/{{distributionName}}-{{projectEffectiveVersion}}-windows-x86_64.msi'
         platform: 'windows-x86_64'
       
