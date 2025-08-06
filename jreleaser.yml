@@ -83,6 +83,7 @@ assemble:
         types: [deb,rpm]
         maintainer: jbang@jbang.dev
         icon: 'src/media/icon_256x256.png'
+        resourceDir: src/jpackage/linux
       windows:
         types: [msi]
         console: false
