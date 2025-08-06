@@ -12,6 +12,17 @@ WIP for enabling jbang:// protocol handler on macOS, Linux and Windows.
 
 Very much early access - use at your own risk.
 
+Once it works, you can use the `jbang://` protocol handler to open jbang scripts.
+
+For now it only just shows the url in a window.
+
+Try it with: 
+
+link:jbang://run/env@jbangdev[]
+
+
+
+
 :releases-url: https://github.com/jbangdev/jbang-launch/releases/download/early-access
 
 [cols="1,1", options="header"]
