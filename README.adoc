@@ -25,22 +25,29 @@ link:jbang://run/env@jbangdev[]
 
 :releases-url: https://github.com/jbangdev/jbang-launch/releases/download/early-access
 
-[cols="1,1", options="header"]
+These builds are not signed, so things is not as smooth as it could be. See column Notes for details.
+
+[cols="1,1,2", options="header"]
 |===
 | Platform
 | Download
+| Notes
 
 | 🖥️ macOS (Intel)
 | link:{releases-url}/jbang-launch-1.0.0-osx-x86_64.pkg[PKG] / link:{releases-url}/jbang-launch-1.0.0-osx-x86_64.dmg[DMG]
+| After download, you may need to remove the quarantine attribute via the terminal: <br/>`xattr -dr com.apple.quarantine /Downloads/jbang-launch.dmg`<br/> and possiblye also once installed `xattr -dr com.apple.quarantine /Applications/jbang-launch.app`
 
 | 🍏 macOS (Apple Silicon)
 | link:{releases-url}/jbang-launch-1.0.0-osx-aarch64.pkg[PKG] / link:{releases-url}/jbang-launch-1.0.0-osx-aarch64.dmg[DMG]
+| After download, you may need to remove the quarantine attribute via the terminal: <br/>`xattr -dr com.apple.quarantine /Downloads/jbang-launch.dmg`<br/> and possiblye also once installed `xattr -dr com.apple.quarantine /Applications/jbang-launch.app`
 
 | 🐧 Linux (x86_64)
 | link:{releases-url}/jbang-launch_1.0.0-1_amd64.deb[DEB] / link:{releases-url}/jbang-launch-1.0.0-1.x86_64.rpm[RPM]
+| After download, use your distro's package manager to install.
 
 | 🪟 Windows (x86_64)
 | link:{releases-url}/jbang-launch-1.0.0-windows-x86_64.msi[MSI]
+| Windows browsers might need multiple clicks to save this url.
 |===
 
 
