@@ -4,8 +4,8 @@ build:
     ./mvnw verify
 
 assemble:
-    JRELEASER_PROJECT_VERSION=1.0.0-SNAPSHOT ./jbang jreleaser@jreleaser assemble
+    JRELEASER_PROJECT_VERSION=`mvn help:evaluate -Dexpression=project.version -q -DforceStdout` ./jbang jreleaser@jreleaser assemble
 
 dry-run-release:
-    JRELEASER_PROJECT_VERSION=1.0.0-SNAPSHOT ./jbang jreleaser@jreleaser full-release --dry-run -scp
+    JRELEASER_PROJECT_VERSION=`mvn help:evaluate -Dexpression=project.version -q -DforceStdout` ./jbang jreleaser@jreleaser full-release --dry-run -scp
 

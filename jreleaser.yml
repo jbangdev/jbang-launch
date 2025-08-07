@@ -22,7 +22,6 @@ project:
       artifactId: jbang-launch
       mainClass: dev.jbang.launch.JBangLaunch
   snapshot:
-    label: '{{projectVersionNumber}}-early-access'
     fullChangelog: true
 
 
