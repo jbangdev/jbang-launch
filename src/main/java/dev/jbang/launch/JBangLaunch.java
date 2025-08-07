@@ -2,11 +2,18 @@
 //SOURCES UrlConverter.java
 package dev.jbang.launch;
 
+import static dev.jbang.launch.UrlConverter.urlToCommand;
+import static dev.jbang.launch.UrlConverter.urlToCommandString;
+import static java.awt.Desktop.getDesktop;
+import static java.awt.Desktop.isDesktopSupported;
+import static java.awt.GraphicsEnvironment.isHeadless;
+import static java.lang.System.err;
+import static java.lang.System.exit;
+import static java.lang.System.out;
+
 import java.awt.Desktop;
-import java.awt.GraphicsEnvironment;
 import java.net.URI;
 import java.util.Arrays;
-import java.util.List;
 import java.util.Scanner;
 
 import javax.swing.JOptionPane;
@@ -21,28 +28,27 @@ public class JBangLaunch {
             // Check for conversion flags
             if (args[0].equals("--to-url")) {
                 if (args.length < 2) {
-                    System.err.println("Usage: jbang-launch --to-url jbang <command> [args]");
-                    System.err.println("       jbang-launch --to-url - (read command from stdin)");
-                    System.exit(1);
+                    err.println("Usage: jbang-launch --to-url jbang <command> [args]");
+                    err.println("       jbang-launch --to-url - (read command from stdin)");
+                    exit(1);
                 }
                 
-                String[] commandArgs = readFromStdinOrArgs(args, 1);
+                var commandArgs = readFromStdinOrArgs(args, 1);
                 
-                String url = UrlConverter.commandToUrl(commandArgs);
-                System.out.println(url);
-                System.exit(0);
+                var url = UrlConverter.commandToUrl(commandArgs);
+                out.println(url);
+                exit(0);
             } else if (args[0].equals("--from-url")) {
                 if (args.length < 2) {
-                    System.err.println("Usage: jbang-launch --from-url <jbang://url>");
-                    System.err.println("       jbang-launch --from-url - (read URL from stdin)");
-                    System.exit(1);
+                    err.println("Usage: jbang-launch --from-url <jbang://url>");
+                    err.println("       jbang-launch --from-url - (read URL from stdin)");
+                    exit(1);
                 }
                 
                 String url = readFromStdinOrArgs(args, 1)[0];
                 
-                String command = UrlConverter.urlToCommandString(url);
-                System.out.println(command);
-                System.exit(0);
+                out.println(urlToCommandString(url));
+                exit(0);
             }
         }
 
@@ -56,7 +62,7 @@ public class JBangLaunch {
 
             if (uri != null && uri.getScheme() != null) {
                 handleURI(uri);
-                System.exit(0);
+                exit(0);
             }
         }
     }
@@ -66,8 +72,8 @@ public class JBangLaunch {
      * on MacOS.
      */
     private static void installURIListener() {
-        if (Desktop.isDesktopSupported()) {
-            Desktop dt = Desktop.getDesktop();
+        if (isDesktopSupported()) {
+            Desktop dt = getDesktop();
             if (dt.isSupported(Desktop.Action.APP_OPEN_URI)) {
                 dt.setOpenURIHandler((event) -> {
                     handleURI(event.getURI());
@@ -78,28 +84,31 @@ public class JBangLaunch {
 
     private static void handleURI(URI uri) {
             // Convert URI to command using UrlConverter
-            List<String> commandArgs = UrlConverter.urlToCommand(uri.toString());
-            String commandString = String.join(" ", commandArgs);
+            String commandString = String.join(" ", urlToCommand(uri.toString()));
             
-            if (GraphicsEnvironment.isHeadless()) {
-                System.out.println("URL: " + uri);
-                System.out.println("Command: " + commandString);
+            if (isHeadless()) {
+                out.println("URL: " + uri);
+                out.println("Command: " + commandString);
                 return;
             } else {
-                // Create message with both URL and converted command
-                String message = "Received URL:\n" + uri.toString() + "\n\nConverted to command:\n" + commandString;
-                try {
-                    UIManager.setLookAndFeel(new FlatLightLaf());
-                } catch (UnsupportedLookAndFeelException e) {
-                    System.err.println("WARN: Failed to set look and feel");
-                    e.printStackTrace();
-                }
+                
+                setupLookAndFeel();
+            
                 JOptionPane.showMessageDialog(
                         null,
-                        message,
+                        "Received URL:\n%s\n\nConverted to command:\n%s".formatted(uri.toString(), commandString),
                         "URL Handler",
                         JOptionPane.INFORMATION_MESSAGE);
             }
+    }
+
+    private static void setupLookAndFeel() {
+        try {
+            UIManager.setLookAndFeel(new FlatLightLaf());
+        } catch (UnsupportedLookAndFeelException e) {
+            err.println("WARN: Failed to set look and feel");
+            e.printStackTrace();
+        }
     }
     
     /**
@@ -112,16 +121,16 @@ public class JBangLaunch {
     private static String[] readFromStdinOrArgs(String[] args, int index) {
         if (args[index].equals("-")) {
             // Read from stdin
-            Scanner scanner = new Scanner(System.in);
-            if (scanner.hasNextLine()) {
-                String input = scanner.nextLine().trim();
-                scanner.close();
+            try (var sc = new Scanner(System.in)) {
+            if (sc.hasNextLine()) {
+                String input = sc.nextLine().trim();
                 return input.split("\\s+");
             } else {
-                System.err.println("No input provided on stdin");
-                System.exit(1);
+                err.println("No input provided on stdin");
+                exit(1);
                 return new String[0]; // This line will never be reached due to System.exit(1)
             }
+        }
         } else {
             // Use provided arguments
             return Arrays.copyOfRange(args, index, args.length);

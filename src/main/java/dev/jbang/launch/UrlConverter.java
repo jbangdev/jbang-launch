@@ -11,9 +11,9 @@ import java.util.*;
 public class UrlConverter {
     
     /**
-     * Converts a jbang command line to a jbang:// URL.
+     * Converts a command line to a <cmd>://<arg1>/<arg2>/... URL.
      * 
-     * @param args the command line arguments (including "jbang" as the first argument)
+     * @param args the command line arguments (including "cmd" as the first argument)
      * @return the jbang:// URL
      * @throws IllegalArgumentException if args is null or empty
      */
@@ -36,20 +36,6 @@ public class UrlConverter {
         return args[0] + "://" + path;
     }
     
-    /**
-     * Converts a jbang command line to a jbang:// URL.
-     * 
-     * @param args the command line arguments as a list (including "jbang" as the first element)
-     * @return the jbang:// URL
-     * @throws IllegalArgumentException if args is null or empty
-     */
-    public static String commandToUrl(List<String> args) {
-        if (args == null || args.isEmpty()) {
-            throw new IllegalArgumentException("Command line arguments cannot be null or empty");
-        }
-        
-        return commandToUrl(args.toArray(new String[0]));
-    }
     
     /**
      * Converts a jbang:// URL back to a command line.
