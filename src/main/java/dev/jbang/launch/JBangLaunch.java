@@ -12,11 +12,22 @@ import static java.lang.System.exit;
 import static java.lang.System.out;
 
 import java.awt.Desktop;
+import java.awt.Frame;
+import java.awt.GraphicsDevice;
+import java.awt.GraphicsEnvironment;
+import java.awt.MouseInfo;
+import java.awt.Point;
+import java.awt.Rectangle;
+import java.awt.Window.Type;
+import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.net.URI;
 import java.util.Arrays;
 import java.util.Scanner;
 
+import javax.swing.JDialog;
 import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
@@ -62,8 +73,19 @@ public class JBangLaunch {
 
             if (uri != null && uri.getScheme() != null) {
                 handleURI(uri);
-                exit(0);
+                // Don't exit immediately - let the dialog handle the flow
+                return;
             }
+        }
+        
+        // If no URI was provided as argument, keep the application alive
+        // for URI handler functionality (especially on macOS)
+        try {
+            // Keep the main thread alive
+            Thread.currentThread().join();
+        } catch (InterruptedException e) {
+            // Exit gracefully if interrupted
+            exit(0);
         }
     }
 
@@ -83,23 +105,99 @@ public class JBangLaunch {
     }
 
     private static void handleURI(URI uri) {
-            // Convert URI to command using UrlConverter
-            String commandString = String.join(" ", urlToCommand(uri.toString()));
+        // Convert URI to command using UrlConverter
+        String[] commandArgs = urlToCommand(uri.toString()).toArray(new String[0]);
+        
+        if (isHeadless()) {
+            out.println("URL: " + uri);
+            out.println("Command: " + String.join(" ", commandArgs));
+            // Execute the command in headless mode
+            executeJbangCommand(commandArgs);
+        } else {
+            setupLookAndFeel();
             
-            if (isHeadless()) {
-                out.println("URL: " + uri);
-                out.println("Command: " + commandString);
-                return;
-            } else {
-                
-                setupLookAndFeel();
+            SwingUtilities.invokeLater(() -> {
+                try {
+                    Rectangle screenBounds = getActiveScreenBounds();
+                    
+                    // Create a simple confirmation dialog
+                    JOptionPane optionPane = new JOptionPane(
+                        "Execute jbang command?\n\n" + String.join(" ", commandArgs),
+                        JOptionPane.QUESTION_MESSAGE,
+                        JOptionPane.YES_NO_OPTION
+                    );
+                    
+                    JDialog dialog = optionPane.createDialog("jbang:// URL Handler");
+                    
+                    // Position the dialog on the same screen as the mouse, but centered
+                    int dialogX = screenBounds.x + (screenBounds.width / 2) - 150;
+                    int dialogY = screenBounds.y + (screenBounds.height / 2) - 75;
+                    
+                    dialog.setLocation(dialogX, dialogY);
+                    
+                    // Show the dialog
+                    dialog.setVisible(true);
+                    
+                    // Get the result
+                    Object selectedValue = optionPane.getValue();
+                    int result = JOptionPane.CLOSED_OPTION;
+                    
+                    if (selectedValue != null) {
+                        if (selectedValue.equals(JOptionPane.YES_OPTION)) {
+                            result = JOptionPane.YES_OPTION;
+                        } else if (selectedValue.equals(JOptionPane.NO_OPTION)) {
+                            result = JOptionPane.NO_OPTION;
+                        }
+                    }
+                    
+                    if (result == JOptionPane.YES_OPTION) {
+                        // Execute the command
+                        executeJbangCommand(commandArgs);
+                    }
+                    
+                    
+                    // Exit after dialog is handled
+                    exit(0);
+                } catch (Exception e) {
+                    err.println("Error showing dialog: " + e.getMessage());
+                    e.printStackTrace();
+                    exit(1);
+                }
+            });
             
-                JOptionPane.showMessageDialog(
-                        null,
-                        "Received URL:\n%s\n\nConverted to command:\n%s".formatted(uri.toString(), commandString),
-                        "URL Handler",
-                        JOptionPane.INFORMATION_MESSAGE);
+        }
+    }
+
+    /**
+     * Needed to position the dialog on the same screen as the mouse.
+     * Otherwise the dialog will be shown on the default screen which
+     * might not be the one the user is currently using.
+     * @return
+     */
+    private static Rectangle getActiveScreenBounds() {
+        // Get the current mouse location
+        Point mouseLocation = MouseInfo.getPointerInfo().getLocation();
+        
+        // Find which screen contains the mouse cursor
+        GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+        GraphicsDevice targetScreen = null;
+        
+        for (GraphicsDevice screen : ge.getScreenDevices()) {
+            Rectangle bounds = screen.getDefaultConfiguration().getBounds();
+            if (bounds.contains(mouseLocation)) {
+                targetScreen = screen;
+                break;
             }
+        }
+        
+        // If no screen found, use the default screen
+        if (targetScreen == null) {
+            targetScreen = ge.getDefaultScreenDevice();
+        }
+        
+        // Get the bounds of the target screen
+        Rectangle screenBounds = targetScreen.getDefaultConfiguration().getBounds();
+        return screenBounds;
     }
 
     private static void setupLookAndFeel() {
@@ -109,6 +207,72 @@ public class JBangLaunch {
             err.println("WARN: Failed to set look and feel");
             e.printStackTrace();
         }
+    }
+    
+    /**
+     * Shows a security error dialog to the user.
+     */
+    private static void showSecurityErrorDialog(String title, String message) {
+        
+        
+try {
+
+                 Rectangle screenBounds = getActiveScreenBounds();
+                    
+                    JOptionPane optionPane = new JOptionPane(
+                        "Security Error\n\n" + message + "\n\nThis command was rejected for security reasons.",
+                        JOptionPane.ERROR_MESSAGE,
+                        JOptionPane.DEFAULT_OPTION
+                    );
+                    
+                    JDialog dialog = optionPane.createDialog(title);
+                    
+                    // Position the dialog on the same screen as the mouse, but centered
+                    int dialogX = screenBounds.x + (screenBounds.width / 2) - 200;
+                    int dialogY = screenBounds.y + (screenBounds.height / 2) - 100;
+                    
+                    dialog.setLocation(dialogX, dialogY);
+                    
+                    // Show the dialog
+                    dialog.setVisible(true);
+                    
+                    // Exit after dialog is handled
+                    exit(0);
+                } catch (Exception e) {
+                    err.println("Error showing security dialog: " + e.getMessage());
+                    e.printStackTrace();
+                    exit(1);
+                }
+            
+       
+    }
+    
+    /**
+     * Executes a jbang command with stdin redirected to /dev/null to discard input.
+     */
+    private static void executeJbangCommand(String... args) {
+       System.out.println("Executing jbang command: " + String.join(" ", args));
+
+      try {
+        TerminalLauncher.launchInTerminal(Arrays.asList(args));
+        System.out.println("Command executed successfully");
+      } catch (IOException e) {
+        if (isHeadless()) {
+            err.println("Failed to execute jbang command: " + e.getMessage());
+            e.printStackTrace();
+            exit(1);
+        } else {
+            showSecurityErrorDialog("Execution Error", "Failed to execute jbang command: " + e.getMessage());
+        }
+      } catch (SecurityException e) {
+        if (isHeadless()) {
+            err.println("Security violation: " + e.getMessage());
+            exit(1);
+        } else {
+            showSecurityErrorDialog("Security Violation", e.getMessage());
+        }
+      }
+      
     }
     
     /**
@@ -124,17 +288,16 @@ public class JBangLaunch {
             try (var sc = new Scanner(System.in)) {
             if (sc.hasNextLine()) {
                 String input = sc.nextLine().trim();
-                return input.split("\\s+");
             } else {
                 err.println("No input provided on stdin");
                 exit(1);
                 return new String[0]; // This line will never be reached due to System.exit(1)
             }
-        }
+            }
         } else {
-            // Use provided arguments
             return Arrays.copyOfRange(args, index, args.length);
         }
+        return new String[0];
     }
 }
 
