@@ -51,21 +51,27 @@ public class UrlConverter {
         
         try {
             URI uri = new URI(url);
-            
+
+            List<String> args = new ArrayList<>();
+            args.add(uri.getScheme()); // Add scheme as first argument
+
+            // Handle host as the first segment, if present
+            if (uri.getHost() != null && !uri.getHost().isEmpty()) {
+                args.add(decode(uri.getHost()));
+            }
+
             String path = uri.getRawPath();
             if (path == null || path.isEmpty()) {
                 throw new IllegalArgumentException("Missing path in " + url);
             }
-            
+
             // Split path into segments and decode each one
-            List<String> args = new ArrayList<>();
-            args.add(uri.getScheme()); // Add scheme as first argument
             for (String segment : path.split("/")) {
                 if (!segment.isEmpty()) {
                     args.add(decode(segment));
                 }
             }
-            
+
             return args;
         } catch (URISyntaxException e) {
             throw new IllegalArgumentException("Invalid URL: " + url, e);
