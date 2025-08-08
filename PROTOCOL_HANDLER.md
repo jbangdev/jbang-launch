@@ -25,7 +25,7 @@ The intent is to be url to use this url format to run java apps from anywhere wi
 1. When a `jbang://` URL is clicked or accessed, the operating system routes it to `jbang-launch`
 2. `jbang-launch` parses the URL to extract the full jbang command
 3. The parsed information is then processed and for security reasons shown to the user
-4. User can then aceept or decline to run the command.
+4. User can then accept or decline to run the command.
 
 ## Platform Support
 
