@@ -6,7 +6,7 @@ This application includes support for the `jbang://` protocol, allowing it to ha
 
 The jbang protocol follows this format:
 ```
-jbang://<command>/<arg1>/<flag1>/<arg2>/<flag2>/...
+jbang:///<command>/<arg1>/<flag1>/<arg2>/<flag2>/...
 ```
 
 Where each arg or flag gets to be their own path segment with special characters URL encoded.
@@ -14,11 +14,13 @@ Where each arg or flag gets to be their own path segment with special characters
 Examples:
 | Command                                 | URL Format                                                      |
 |------------------------------------------|-----------------------------------------------------------------|
-| `jbang run hello.java`                   | `jbang://run/hello.java`                                        |
-| `jbang run --fresh example@latest`       | `jbang://run/--fresh/example@latest`                            |
+| `jbang run hello.java`                   | `jbang:///run/hello.java`                                        |
+| `jbang run --fresh example@latest`       | `jbang:///run/--fresh/example@latest`                            |
 | `jbang run github:jbangdev/jbang-action@main` | `jbang:///run/github%3Ajbangdev%2Fjbang-action%40main`     |
 
 The intent is to be url to use this url format to run java apps from anywhere with minimal setup.
+
+Take note that the host/authority part of URI format is currently not used. It might be used in future.
 
 ## How It Works
 

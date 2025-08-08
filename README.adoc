@@ -16,9 +16,17 @@ Once it works, you can use the `jbang://` protocol handler to open jbang scripts
 
 For now it only just shows the url in a window.
 
-Try it with: 
+Below are some examples of what you can do with it:
 
-link:jbang://run/env@jbangdev[]
+
+[cols="1,2", options="header"]
+|===
+| Example
+| Description
+
+| https://jbang.dev/launch?jbang:///-m/com.techsenger.jeditermfx.app.JediTermFx/com.techsenger.jeditermfx%3Ajeditermfx-app%3A1.0.0[JeditermFX]
+| Launches the JeditermFX app `jbang -m com.techsenger.jeditermfx.app.JediTermFx com.techsenger.jeditermfx:jeditermfx-app:1.0.0`
+|===
 
 
 

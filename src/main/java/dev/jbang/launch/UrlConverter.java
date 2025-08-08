@@ -17,7 +17,7 @@ public class UrlConverter {
      * @return the jbang:// URL
      * @throws IllegalArgumentException if args is null or empty
      */
-    public static String commandToUrl(String... args) {
+    public static URI commandToUrl(String... args) {
         if (args == null || args.length == 0) {
             throw new IllegalArgumentException("Command line arguments cannot be null or empty");
         }
@@ -33,7 +33,7 @@ public class UrlConverter {
         }
         
         String path = "/" + String.join("/", segments);
-        return args[0] + "://" + path;
+        return URI.create(args[0] + "://" + path);
     }
     
     
@@ -60,10 +60,9 @@ public class UrlConverter {
             // Split path into segments and decode each one
             List<String> args = new ArrayList<>();
             args.add(uri.getScheme()); // Add scheme as first argument
-            for (String segment : path.split("/")) {
-                if (!segment.isEmpty()) {
-                    args.add(decode(segment));
-                }
+            String[] segments = path.split("/", -1); // -1 preserves trailing empty segments
+            for (int i = 1; i < segments.length; i++) { // Skip first empty segment from leading slash
+                args.add(decode(segments[i]));
             }
             
             return args;
@@ -85,10 +84,18 @@ public class UrlConverter {
     }
     
     /**
-     * URL-encodes a string using UTF-8 encoding.
+     * URL-encodes a string using RFC 3986 encoding for URL paths.
      */
     private static String encode(String s) {
-        return URLEncoder.encode(s, StandardCharsets.UTF_8);
+        try {
+            // Use URI constructor for RFC 3986 compliant encoding
+            URI uri = new URI("http", "example.com", "/" + s, null);
+            String encoded = uri.getRawPath();
+            // Remove the leading slash that URI adds
+            return encoded.substring(1);
+        } catch (URISyntaxException e) {
+            throw new IllegalStateException("Failed to encode string: " + s, e);
+        }
     }
     
     /**
