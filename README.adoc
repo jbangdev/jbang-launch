@@ -12,12 +12,13 @@ WIP for enabling jbang:// protocol handler on macOS, Linux and Windows.
 
 Very much early access - use at your own risk.
 
+image:https://github.com/jbangdev/jbang-launch/actions/workflows/early-access.yml/badge.svg["Early Access", link="https://github.com/jbangdev/jbang-launch/actions/workflows/early-access.yml"]
+
 Once it works, you can use the `jbang://` protocol handler to open jbang scripts.
 
-For now it only just shows the url in a window.
+For now it attempts to open and run the linked commannd in at the OS terminal.
 
 Below are some examples of what you can do with it:
-
 
 [cols="1,2", options="header"]
 |===
@@ -54,7 +55,7 @@ These builds are not signed, so things is not as smooth as it could be. See colu
 | After download, use your distro's package manager to install.
 
 | 🪟 Windows (x86_64)
-| link:{releases-url}/jbang-launch-early-access-windows-x86_64.msi[MSI]
+a| link:{releases-url}/jbang-launch-early-access-windows-x86_64.msi[MSI]
 | Windows browsers might need multiple clicks to save this url.
 |===
 
